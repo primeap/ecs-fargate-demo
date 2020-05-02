@@ -3,15 +3,12 @@ git:
 
 env:
   global:
-    - PROJECT_NAME=products-service-routledge-api
+    - PROJECT_NAME=ecs-fargate-demo
     - ENV=`if [[ "$TRAVIS_BRANCH" == "master" ]]; then echo "dev"; elif [[ "$TRAVIS_BRANCH" == "prod" ]]; then echo "prod"; elif [[ "$TRAVIS_BRANCH" == "uat" ]]; then echo "uat"; fi`
-    - ECR_PROJECT_NAME=products-service-routledge-api
-    - ECR_REPO=012177264511.dkr.ecr.us-east-1.amazonaws.com/$ECR_PROJECT_NAME
+    - ECR_PROJECT_NAME=ecs-fargate-demo
+    - ECR_REPO=995296566838.dkr.ecr.us-east-1.amazonaws.com/$ECR_PROJECT_NAME
     - AWS_REGION=us-east-1
-    - ECS_SERVICE_NAME=Product-Service-Routledge-API-$ENV
-    - ECS_CLUSTER_NAME=clu-use1-ap-pe-df-products-service-routledge-$ENV
     - PROJECT_VERSION=$(mvn help:evaluate -Dexpression=project.version -DforceStdout -q)
-    - ECS_TASK_DEF=td-products-service-routledge-api-task-$ENV
 
 install: true
 
@@ -32,7 +29,6 @@ jobs:
       cache:
         directories:
           - "$HOME/.m2"
-          - "$HOME/.sonar/cache"
       services:
         - docker
       sudo: required
@@ -59,7 +55,6 @@ jobs:
       cache:
         directories:
           - "$HOME/.m2"
-          - "$HOME/.sonar/cache"
       services:
         - docker
       sudo: required
