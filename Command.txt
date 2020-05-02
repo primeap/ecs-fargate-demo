@@ -1,0 +1,5 @@
+mvn clean install -DskipTests
+
+docker build . -t ecs-fargate-demo
+
+docker run -d -p 8080:8080 -t ecs-fargate-demo
