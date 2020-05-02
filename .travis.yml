@@ -49,33 +49,6 @@ jobs:
       script:
         - echo "Downloading and caching project dependencies"
         - mvn dependency:go-offline 
-    
-    - stage: build
-      name: "Build JAR, run unit tests and integration tests"
-      cache:
-        directories:
-          - "$HOME/.m2"
-      services:
-        - docker
-      sudo: required
-      language: java
-      jdk: openjdk11
-      addons:
-        apt:
-          packages:
-            - "python3"
-            - "python3-pip"
-      before_install:
-        - pip3 install --upgrade pip
-        - pip3 install --upgrade awscli --user
-      before_script:
-        - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
-        - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
-        - aws configure set region $AWS_REGION
-      script:
-        - echo "Building JAR and testing"
-        - mvn clean verify
-
        
     - stage: publish
       name: "Publish Docker image to ECR"
